@@ -3,7 +3,7 @@
 A docker-based build system for cross-compiling Go applications for ARM <abbr title="System on a Chip">SoCs</abbr> (like the Raspberry Pi) using [Tamago](https://github.com/usbarmory/tamago-go).
 
 ```bash
-$ go install github.com/jphastings/tbd
+$ go install github.com/jphastings/tbd@latest
 
 $ cd path/to/go/app
 $ tbd
