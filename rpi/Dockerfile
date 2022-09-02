@@ -1,18 +1,13 @@
 # The version of Go used to compile tamago-go
-ARG BOOTSTRAP_GO_VERSION=1.18.1
-
-FROM golang:$BOOTSTRAP_GO_VERSION as go
-
-COPY / /usr/local/tamago-go
-RUN cd /usr/local/tamago-go/src && ./all.bash
+ARG GO_VERSION=1.18.1
 
 FROM multiarch/crossbuild
 
-COPY --from=go /usr/local/tamago-go /usr/local/tamago-go
+RUN curl -L https://github.com/f-secure-foundry/tamago-go/releases/download/tamago-go${GO_VERSION}/tamago-go${GO_VERSION}.linux-amd64.tar.gz | tar -zxf - -C /
 ENV TAMAGO=/usr/local/tamago-go/bin/go
 
 ENV CROSS_TRIPLE=arm-linux-gnueabi
-COPY /tamago-build/rpi /tamago-build/
+COPY . /tbd/
 
-ENTRYPOINT ["crossbuild", "/tamago-build/build.sh"]
+ENTRYPOINT ["crossbuild", "/tbd/build.sh"]
 CMD ["."]
